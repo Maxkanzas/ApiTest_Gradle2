@@ -23,3 +23,5 @@ build/
 ### Logs ###
 *.log
 .build
+build/allure-results/
+.idea/
