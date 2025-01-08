@@ -24,4 +24,5 @@ build/
 *.log
 .build
 build/allure-results/
+build/allure/
 .idea/
