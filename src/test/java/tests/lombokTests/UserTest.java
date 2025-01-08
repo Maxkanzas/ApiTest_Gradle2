@@ -1,6 +1,7 @@
 package tests.lombokTests;
 
 import models.lombok.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
@@ -13,6 +14,7 @@ import static specs.MissingPasswordResponseSpec.missingPasswordResponseSpec;
 import static specs.RequestSpec.loginRequestSpecRegister;
 import static specs.ResponseSpec.loginResponseSpec;
 
+@Tag("RegTests")
 public class UserTest {
 
     @Test
