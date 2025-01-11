@@ -43,8 +43,3 @@ tasks.withType(Test) {
         }
     }
 }
-task runing_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("RegTests")
-    }
-}
