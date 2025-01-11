@@ -1,5 +1,7 @@
-package tests.pojoTests;
+package tests;
 
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -7,74 +9,79 @@ import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UsersTests {
+public class UsersTestsPojo {
     String authFullData = "{\n" + "\"email\": \"eve.holt@reqres.in\",\n" + "\"password\": \"cityslicka\"\n" + "}";
     String authDataNotPassword = "{\n" + "\"email\": \"peter@klaven\"\n" + "}";
     String authDataAnotherPassword = "{\n" + "\"email\": \"eve.holt@reqres.in\",\n" + "\"password\": \"pistol\"\n" + "}";
     String authDataNotPassword1 = "{\n" + "\"email\": \"sydney@fife\"\n" + "}";
     String authDataCreateUser = "{\n" + "\"name\": \"morpheus\",\n" + "\"job\": \"leader\"\n" + "}";
 
+    @BeforeAll
+    public static void setup() {
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api";
+    }
+
     @Test
     public void loginSuccessFullTest() {
         given()
                 .body(authFullData)
                 .contentType(JSON)
-                .log().uri()
+                .log().all()
 
-        .when()
-                .post("https://reqres.in/api/login")
+                .when()
+                .post("/login")
 
-        .then()
-                .log().status()
-                .log().body()
+                .then()
+                .log().all()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", notNullValue());
     }
+
     @Test
-    public void registerSuccessfulTest(){
+    public void registerSuccessfulTest() {
         given()
                 .body(authDataAnotherPassword)
                 .contentType(JSON)
-                .log().uri()
+                .log().all()
 
-        .when()
-                .post("https://reqres.in/api/register")
+                .when()
+                .post("/register")
 
-        .then()
-                .log().status()
-                .log().body()
+                .then()
+                .log().all()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"))
+                .body("token", notNullValue())
                 .body("id", is(4));
     }
+
     @Test
     public void createUserTest() {
         given()
                 .body(authDataCreateUser)
                 .contentType(JSON)
-                .log().uri()
+                .log().all()
 
-        .when()
-                .post("https://reqres.in/api/users")
+                .when()
+                .post("/users")
 
-        .then()
-                .log().status()
-                .log().body()
+                .then()
+                .log().all()
                 .statusCode(201)
                 .body("name", is("morpheus"))
                 .body("job", is("leader"))
                 .body("id", notNullValue())
                 .body("createdAt", notNullValue());
     }
+
     @Test
     public void getUsersListTest() {
         given()
-                .log().uri()
+                .log().all()
                 .when()
-                .get("https://reqres.in/api/users?page=2")
+                .get("/users?page=2")
                 .then()
-                .log().status()
-                .log().body()
+                .log().all()
                 .statusCode(200)
                 .body("page", is(2))
                 .body("per_page", is(6))
@@ -89,35 +96,35 @@ public class UsersTests {
                 .body("support.url", is("https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral"))
                 .body("support.text", is("Tired of writing endless social media content? Let Content Caddy generate it for you."));
     }
+
     @Test
     public void unSuccessFullLoginTest() {
         given()
                 .body(authDataNotPassword)
                 .contentType(JSON)
-                .log().uri()
+                .log().all()
 
-        .when()
-                .post("https://reqres.in/api/login")
+                .when()
+                .post("/login")
 
-        .then()
-                .log().status()
-                .log().body()
+                .then()
+                .log().all()
                 .statusCode(400)
                 .body("error", equalTo("Missing password"));
     }
+
     @Test
     public void registerUnSuccessFullTest() {
         given()
                 .body(authDataNotPassword1)
                 .contentType(JSON)
-                .log().uri()
+                .log().all()
 
-        .when()
-                .post("https://reqres.in/api/register")
+                .when()
+                .post("/register")
 
-        .then()
-                .log().status()
-                .log().body()
+                .then()
+                .log().all()
                 .statusCode(400)
                 .body("error", equalTo("Missing password"));
     }

@@ -1,4 +1,4 @@
-package tests.pojoTests;
+package tests;
 
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.get;
@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.core.Is.is;
 
-public class StatusTests {
+public class StatusTestsPojo {
     @Test
     public void checkStatus() {
         given()

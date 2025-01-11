@@ -1,4 +1,4 @@
-package tests.lombokTests;
+package tests;
 
 import models.lombok.*;
 import org.junit.jupiter.api.Tag;
@@ -15,7 +15,7 @@ import static specs.RequestSpec.loginRequestSpecRegister;
 import static specs.ResponseSpec.loginResponseSpec;
 
 @Tag("RegTests")
-public class UserTest {
+public class UserTestLombok {
 
     @Test
     public void loginSuccessFullLombokTest() {
