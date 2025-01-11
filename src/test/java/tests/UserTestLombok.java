@@ -1,6 +1,7 @@
 package tests;
 
-import models.lombok.*;
+import models.*;
+import models.Error;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -8,43 +9,43 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static specs.ListUsersSpec.listUsersRequestSpec;
-import static specs.LoginSpec.*;
-import static specs.MissingPasswordResponseSpec.missingPasswordResponseSpec;
+import static specs.RequestSpec.listUsersRequestSpec;
+import static specs.RequestSpec.loginRequestSpec;
 import static specs.RequestSpec.loginRequestSpecRegister;
 import static specs.ResponseSpec.loginResponseSpec;
+import static specs.ResponseSpec.missingPasswordResponseSpec;
 
 @Tag("RegTests")
 public class UserTestLombok {
 
     @Test
     public void loginSuccessFullLombokTest() {
-        DataLombok authData = new DataLombok();
-        authData.setEmail("eve.holt@reqres.in");
-        authData.setPassword("cityslicka");
+        DataUsers authDataUsers = new DataUsers();
+        authDataUsers.setEmail("eve.holt@reqres.in");
+        authDataUsers.setPassword("cityslicka");
 
-        TokenLombok response = step("Направили запрос", () ->
+        Token response = step("Направили запрос", () ->
                 given(loginRequestSpec)
-                        .body(authData)
+                        .body(authDataUsers)
                 .when()
                         .post()
 
                 .then()
                         .spec(loginResponseSpec)
-                        .extract().body().as(TokenLombok.class));
+                        .extract().body().as(Token.class));
         step("Проверили ответ", () ->
                 assertEquals("QpwL5tke4Pnpja7X4", response.getToken()));
     }
 
     @Test
     public void registerSuccessfulLombokTest() {
-        DataLombok authData = new DataLombok();
-        authData.setEmail("eve.holt@reqres.in");
-        authData.setPassword("pistol");
+        DataUsers authDataUsers = new DataUsers();
+        authDataUsers.setEmail("eve.holt@reqres.in");
+        authDataUsers.setPassword("pistol");
 
         RegisterResponse response = step("Отправка запроса и извлечение ответа", () ->
                 given(loginRequestSpecRegister)
-                        .body(authData)
+                        .body(authDataUsers)
                 .when()
                         .post()
                 .then()
@@ -60,50 +61,50 @@ public class UserTestLombok {
     }
     @Test
     public void unSuccessFullLoginLombokTest() {
-        DataLombok authData = new DataLombok();
-        authData.setEmail("peter@klaven");
+        DataUsers authDataUsers = new DataUsers();
+        authDataUsers.setEmail("peter@klaven");
 
-        ErrorLombok response = step("Отправка запроса и извлечение ответа", () ->
+        Error response = step("Отправка запроса и извлечение ответа", () ->
             given(loginRequestSpec)
-                    .body(authData)
+                    .body(authDataUsers)
 
             .when()
                     .post()
 
             .then()
                     .spec(missingPasswordResponseSpec)
-                    .extract().body().as(ErrorLombok.class));
+                    .extract().body().as(Error.class));
         step("Проверили ответ", () ->
                 assertEquals("Missing password", response.getError()));
     }
     @Test
     public void registerUnSuccessFullLombokTest() {
-        DataLombok authData = new DataLombok();
-        authData.setEmail("sydney@fife");
+        DataUsers authDataUsers = new DataUsers();
+        authDataUsers.setEmail("sydney@fife");
 
-        ErrorLombok response = step("Отправка запроса и извлечение ответа", () ->
+        Error response = step("Отправка запроса и извлечение ответа", () ->
             given(loginRequestSpecRegister)
-                    .body(authData)
+                    .body(authDataUsers)
 
             .when()
                     .post()
 
             .then()
                     .spec(missingPasswordResponseSpec)
-                    .extract().body().as(ErrorLombok.class));
+                    .extract().body().as(Error.class));
         step("Проверили ответ", () ->
                 assertEquals("Missing password", response.getError()));
     }
     @Test
     public void ListUsersLombokTest() {
-        ListUsersLombok response = step("Направили запрос", () ->
+        ListUsers response = step("Направили запрос", () ->
                 given(listUsersRequestSpec)
                 .when()
                         .get()
 
                 .then()
                         .spec(loginResponseSpec)
-                        .extract().body().as(ListUsersLombok.class));
+                        .extract().body().as(ListUsers.class));
         step("Проверили параметры ответа", () -> {
 
             assertNotNull(response.getPage(), "Missing 'page'");
@@ -119,7 +120,7 @@ public class UserTestLombok {
             assertNotNull(response.getData(), "Missing 'data'");
             assertEquals(6, response.getData().size(), "'data' size mismatch");
 
-            DataUsers firstUser = response.getData().get(0);
+            Credentials firstUser = response.getData().get(0);
             assertNotNull(firstUser.getId(), "Missing 'id' in first user");
             assertEquals(1, firstUser.getId(), "'id' mismatch in first user");
 

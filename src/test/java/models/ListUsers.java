@@ -1,12 +1,12 @@
-package models.lombok;
+package models;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ListUsersLombok {
+public class ListUsers {
     int page, per_page, total, total_pages;
-    List<DataUsers> data;
+    List<Credentials> data;
     Support support;
 }

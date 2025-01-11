@@ -15,4 +15,20 @@ public class RequestSpec {
             .contentType(JSON)
             .baseUri("https://reqres.in")
             .basePath("/api/register");
+    public static RequestSpecification loginRequestSpec = with()
+            .filter(withCustomTemplates())
+            .log().uri()
+            .log().body()
+            .log().headers()
+            .contentType(JSON)
+            .baseUri("https://reqres.in")
+            .basePath("/api/login");
+    public static RequestSpecification listUsersRequestSpec = with()
+            .filter(withCustomTemplates())
+            .log().uri()
+            .log().body()
+            .log().headers()
+            .contentType(JSON)
+            .baseUri("https://reqres.in")
+            .basePath("/api/users?page=2");
 }
