@@ -1,27 +1,14 @@
 package tests.demowebshop;
 
-import com.codeborne.selenide.Configuration;
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
-public class LoginTests {
-    String login = "maxkanz1991@gmail.com";
-    String password = "u252@jAXSh2z$z";
-
-    @BeforeAll
-    static void setup() {
-        Configuration.baseUrl = "https://demowebshop.tricentis.com/";
-        RestAssured.baseURI = "https://demowebshop.tricentis.com";
-    }
-
+public class LoginTests extends TestBase {
     @Test
     public void loginUITest() {
         step("Открыть страницу авторизации", () -> {
@@ -35,7 +22,6 @@ public class LoginTests {
             $(".account").shouldHave(text(login));
         });
     }
-
     @Test
     public void loginApiTest() {
         step("Получаем cookie авторизации", () -> {
