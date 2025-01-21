@@ -1,4 +1,4 @@
-package models;
+package models.login;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package specs;
+package specs.reqresin;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;

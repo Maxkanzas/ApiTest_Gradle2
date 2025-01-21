@@ -1,7 +1,7 @@
 package tests;
 
-import models.*;
-import models.Error;
+import models.login.*;
+import models.login.Error;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +9,11 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static specs.RequestSpec.listUsersRequestSpec;
-import static specs.RequestSpec.loginRequestSpec;
-import static specs.RequestSpec.loginRequestSpecRegister;
-import static specs.ResponseSpec.loginResponseSpec;
-import static specs.ResponseSpec.missingPasswordResponseSpec;
+import static specs.reqresin.RequestSpec.listUsersRequestSpec;
+import static specs.reqresin.RequestSpec.loginRequestSpec;
+import static specs.reqresin.RequestSpec.loginRequestSpecRegister;
+import static specs.reqresin.ResponseSpec.loginResponseSpec;
+import static specs.reqresin.ResponseSpec.missingPasswordResponseSpec;
 
 @Tag("RegTests")
 public class UserTestLombok {
