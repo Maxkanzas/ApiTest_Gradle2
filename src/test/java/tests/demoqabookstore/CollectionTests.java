@@ -43,8 +43,7 @@ public class CollectionTests extends TestBase {
             profilePage.verifyTableContainsText("Programming JavaScript Applications");
         });
         step("Удаление одной книги из корзины", () -> {
-            bookApiSteps.deleteBook(dataUsers, "Programming JavaScript Applications");
+            bookApiSteps.deleteBook(dataUsers, "9781491950296");
         });
-
     }
 }
